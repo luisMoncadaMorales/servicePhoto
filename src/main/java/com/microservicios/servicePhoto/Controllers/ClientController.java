@@ -53,7 +53,7 @@ public class ClientController {
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(client);
     }
-    @GetMapping(value = "deleteById")
+    @DeleteMapping(value = "deleteById")
     public ResponseEntity<String> deleteById(@Param(value = "id") int id,@Param(value = "typeId") String typeId){
         String result=service.deleteById(id,typeId);
         if (result!="removed")
