@@ -1,8 +1,8 @@
 package com.microservicios.servicePhoto.Controllers;
 
-import com.microservicios.servicePhoto.DTO.ClientDTO;
-import com.microservicios.servicePhoto.Documents.Client;
-import com.microservicios.servicePhoto.Services.ClientService;
+import com.microservicios.servicePhoto.DTO.PhotoDTO;
+import com.microservicios.servicePhoto.Documents.Photo;
+import com.microservicios.servicePhoto.Services.PhotoService;
 import com.microservicios.servicePhoto.Services.ErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -17,41 +17,41 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "api")
-public class ClientController {
+public class PhotoController {
 
-    private ClientService service;
+    private PhotoService service;
     private ErrorService errorService;
 
     @Autowired
-    public ClientController(ClientService service, ErrorService errorService) {
+    public PhotoController(PhotoService service, ErrorService errorService) {
         this.service = service;
         this.errorService = errorService;
     }
 
-    @PostMapping(value = "saveClient")
-    public ResponseEntity<Client> saveClient(@Valid  @RequestBody Client client, BindingResult bindingResult){
+    @PostMapping(value = "savePhoto")
+    public ResponseEntity<Photo> savePhoto(@Valid  @RequestBody Photo photo, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw  new ResponseStatusException(HttpStatus.BAD_REQUEST,errorService.formatMessage(bindingResult));
         }else {
-            Client clientResult = service.saveClient(client);
-            if (clientResult == null)
+            Photo photoResult = service.savePhoto(photo);
+            if (photoResult == null)
                 return ResponseEntity.unprocessableEntity().build();
-            return ResponseEntity.ok(clientResult);
+            return ResponseEntity.ok(photoResult);
         }
     }
-    @GetMapping(value = "clients")
-    public ResponseEntity<List<Client>> clients(){
-        List<Client> clients=service.clients();
-        if (clients.isEmpty())
+    @GetMapping(value = "photos")
+    public ResponseEntity<List<Photo>> photos(){
+        List<Photo> photos =service.photos();
+        if (photos.isEmpty())
             return ResponseEntity.noContent().build();
-        return ResponseEntity.ok(clients);
+        return ResponseEntity.ok(photos);
     }
-    @GetMapping(value = "clientById")
-    public ResponseEntity<Client> clientById(@Param(value = "id") int id,@Param(value = "typeId") String typeId){
-        Client client=service.clientById(id,typeId);
-        if (client==null)
+    @GetMapping(value = "photoById")
+    public ResponseEntity<Photo> photoById(@Param(value = "id") int id, @Param(value = "typeId") String typeId){
+        Photo photo =service.photoById(id,typeId);
+        if (photo ==null)
             return ResponseEntity.noContent().build();
-        return ResponseEntity.ok(client);
+        return ResponseEntity.ok(photo);
     }
     @DeleteMapping(value = "deleteById")
     public ResponseEntity<String> deleteById(@Param(value = "id") int id,@Param(value = "typeId") String typeId){
@@ -60,13 +60,13 @@ public class ClientController {
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(result);
     }
-    @PostMapping(value = "clientsById")
-    public ResponseEntity<List<Client>> clientsById(@RequestBody List<ClientDTO> clientsDTO){
-        List<Client> clients=service.clientsById(clientsDTO);
-        if (clients==null){
+    @PostMapping(value = "photosById")
+    public ResponseEntity<List<Photo>> photosById(@RequestBody List<PhotoDTO> clientsDTO){
+        List<Photo> photos =service.photosById(clientsDTO);
+        if (photos ==null){
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(clients);
+        return ResponseEntity.ok(photos);
     }
 
 }

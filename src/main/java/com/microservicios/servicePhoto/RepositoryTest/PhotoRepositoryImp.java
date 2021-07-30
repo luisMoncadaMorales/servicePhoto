@@ -1,39 +1,39 @@
 package com.microservicios.servicePhoto.RepositoryTest;
 
-import com.microservicios.servicePhoto.Documents.Client;
-import com.microservicios.servicePhoto.Persistence.ClientDAO;
+import com.microservicios.servicePhoto.Documents.Photo;
+import com.microservicios.servicePhoto.Persistence.PhotoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class ClientRepositoryImp implements ClientRepository {
+public class PhotoRepositoryImp implements PhotoRepository {
     @Autowired
-    private ClientDAO clientDAO;
+    private PhotoDAO photoDAO;
     @Override
-    public Client saveClient(Client client) {
-        return clientDAO.save(client);
+    public Photo savePhoto(Photo photo) {
+        return photoDAO.save(photo);
     }
 
     @Override
-    public List<Client> clients() {
-        return clientDAO.findAll();
+    public List<Photo> photos() {
+        return photoDAO.findAll();
     }
 
     @Override
-    public Client clientById(int id, String typeId) {
-        return clientDAO.findByIdAndType(id,typeId);
+    public Photo photoById(int id, String typeId) {
+        return photoDAO.findByIdAndType(id,typeId);
     }
 
     @Override
     public String deleteById(int id, String typeId) {
-        Client client= this.clientById(id,typeId);
+        Photo photo = this.photoById(id,typeId);
         String result="not found";
-        if (client!=null)
+        if (photo !=null)
             try{
                 //clientDAO.deleteByIdAndType(id,typeId);
-                clientDAO.delete(client);
+                photoDAO.delete(photo);
                 result="removed";
             }catch (Exception ex){
                 result=ex.getMessage();

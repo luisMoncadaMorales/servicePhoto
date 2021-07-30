@@ -12,13 +12,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Client implements Serializable {
+public class Photo implements Serializable {
     @Id
     @Positive(message = "the number_id must be greater than 0")
     private int number_id;
     @NotEmpty(message = "the type_id field cannot be empty")
     private String type_id;
     @NotEmpty(message = "the photo field cannot be empty")
-    private String photo;
+    private String image;
 
 }

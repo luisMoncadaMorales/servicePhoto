@@ -1,8 +1,7 @@
 package com.microservicios.servicePhoto.RepositoryTest;
 
-import com.microservicios.servicePhoto.DTO.ClientDTO;
-import com.microservicios.servicePhoto.Documents.Client;
-import com.microservicios.servicePhoto.Persistence.ClientDAO;
+import com.microservicios.servicePhoto.Documents.Photo;
+import com.microservicios.servicePhoto.Persistence.PhotoDAO;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,44 +17,44 @@ import java.util.List;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class ClientRepositoryTest {
+public class PhotoRepositoryTest {
     @InjectMocks
-    private ClientRepositoryImp repository;
+    private PhotoRepositoryImp repository;
 
     @Mock
-    private ClientRepositoryImp repositoryMock;
+    private PhotoRepositoryImp repositoryMock;
     @Mock
-    private ClientDAO clientDAO;
+    private PhotoDAO photoDAO;
 
-    private Client client;
-    private List<Client> clients;
+    private Photo photo;
+    private List<Photo> photos;
 
     @BeforeEach
     public void setup(){
         MockitoAnnotations.openMocks(this);
-        client=Client.builder()
+        photo = Photo.builder()
                 .number_id(1052)
                 .type_id("cc")
-                .photo("photo").build();
-        clients= Arrays.asList(client);
-        Mockito.when(clientDAO.save(client)).thenReturn(client);
-        Mockito.when(clientDAO.findAll()).thenReturn(clients);
-        Mockito.when(clientDAO.findByIdAndType(1052,"cc")).thenReturn(client);
+                .image("photo").build();
+        photos = Arrays.asList(photo);
+        Mockito.when(photoDAO.save(photo)).thenReturn(photo);
+        Mockito.when(photoDAO.findAll()).thenReturn(photos);
+        Mockito.when(photoDAO.findByIdAndType(1052,"cc")).thenReturn(photo);
     }
     @Test
     public void saveClientTest() {
-        Client clientResult=repository.saveClient(client);
-        Assertions.assertThat(clientResult).isNotNull();
+        Photo photoResult =repository.savePhoto(photo);
+        Assertions.assertThat(photoResult).isNotNull();
     }
     @Test
     public void ClientsTest() {
-        List<Client> clientsResult=repository.clients();
+        List<Photo> clientsResult=repository.photos();
         Assertions.assertThat(clientsResult.size()).isEqualTo(1);
     }
     @Test
     public void clientByIdTest() {
-        Client clientResult=repository.clientById(1052,"cc");
-        Assertions.assertThat(clientResult.getPhoto()).isEqualTo("photo");
+        Photo photoResult =repository.photoById(1052,"cc");
+        Assertions.assertThat(photoResult.getImage()).isEqualTo("photo");
     }
     @Test
     public void deleteByIdTest() {

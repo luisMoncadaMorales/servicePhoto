@@ -1,10 +1,9 @@
 package com.microservicios.servicePhoto.ServicesTest;
 
-import com.microservicios.servicePhoto.DTO.ClientDTO;
-import com.microservicios.servicePhoto.Documents.Client;
-import com.microservicios.servicePhoto.Persistence.ClientDAO;
-import com.microservicios.servicePhoto.RepositoryTest.ClientRepositoryImp;
-import com.microservicios.servicePhoto.Services.ClientServiceImp;
+import com.microservicios.servicePhoto.DTO.PhotoDTO;
+import com.microservicios.servicePhoto.Documents.Photo;
+import com.microservicios.servicePhoto.RepositoryTest.PhotoRepositoryImp;
+import com.microservicios.servicePhoto.Services.PhotoServiceImp;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,46 +21,46 @@ import static org.mockito.Mockito.verify;
 @SpringBootTest
 public class ClienteServiceTest {
     @InjectMocks
-    private ClientServiceImp service;
+    private PhotoServiceImp service;
     @Mock
-    private ClientRepositoryImp repository;
-    private Client client;
-    private ClientDTO clientDTO;
-    private List<Client> clients;
-    private  List<ClientDTO> clientsDTO;
+    private PhotoRepositoryImp repository;
+    private Photo photo;
+    private PhotoDTO photoDTO;
+    private List<Photo> photos;
+    private  List<PhotoDTO> clientsDTO;
 
     @BeforeEach
     public void setup(){
         MockitoAnnotations.openMocks(this);
-        client=Client.builder()
+        photo = Photo.builder()
                 .number_id(1052)
                 .type_id("cc")
-                .photo("photo").build();
-        clientDTO=ClientDTO.builder()
+                .image("photo").build();
+        photoDTO = PhotoDTO.builder()
                 .number_id(1052)
                 .type_id("cc")
                 .build();
-        clients= Arrays.asList(client);
-        clientsDTO=Arrays.asList(clientDTO);
-        Mockito.when(repository.saveClient(client)).thenReturn(client);
-        Mockito.when(repository.clients()).thenReturn(clients);
-        Mockito.when(repository.clientById(1052,"cc")).thenReturn(client);
+        photos = Arrays.asList(photo);
+        clientsDTO=Arrays.asList(photoDTO);
+        Mockito.when(repository.savePhoto(photo)).thenReturn(photo);
+        Mockito.when(repository.photos()).thenReturn(photos);
+        Mockito.when(repository.photoById(1052,"cc")).thenReturn(photo);
         Mockito.when(repository.deleteById(1052,"cc")).thenReturn("removed");
     }
     @Test
     public void saveClientTest() {
-        Client clientResult=service.saveClient(client);
-        Assertions.assertThat(clientResult).isNotNull();
+        Photo photoResult =service.savePhoto(photo);
+        Assertions.assertThat(photoResult).isNotNull();
     }
     @Test
     public void ClientsTest() {
-        List<Client> clientsResult=service.clients();
+        List<Photo> clientsResult=service.photos();
         Assertions.assertThat(clientsResult.size()).isEqualTo(1);
     }
     @Test
     public void clientByIdTest() {
-        Client clientResult=service.clientById(1052,"cc");
-        Assertions.assertThat(clientResult.getPhoto()).isEqualTo("photo");
+        Photo photoResult =service.photoById(1052,"cc");
+        Assertions.assertThat(photoResult.getImage()).isEqualTo("photo");
     }
     @Test
     public void deleteByIdTest() {
@@ -70,7 +69,7 @@ public class ClienteServiceTest {
     }
     @Test
     public void clientsByIdTest() {
-        List<Client> clientsResult=service.clientsById(clientsDTO);
+        List<Photo> clientsResult=service.photosById(clientsDTO);
         Assertions.assertThat(clientsResult.size()).isEqualTo(1);
     }
 }
