@@ -1,8 +1,0 @@
-server:
-  error:
-    include-message: always
-  port: 8081
-spring:
-  data:
-    mongodb:
-      uri: mongodb://admin:123456789@localhost:27017/practicapragma
