@@ -32,8 +32,7 @@ public class PhotoRepositoryImp implements PhotoRepository {
         String result="not found";
         if (photo !=null)
             try{
-                //clientDAO.deleteByIdAndType(id,typeId);
-                photoDAO.delete(photo);
+                photoDAO.deleteByIdAndType(id,typeId);
                 result="removed";
             }catch (Exception ex){
                 result=ex.getMessage();

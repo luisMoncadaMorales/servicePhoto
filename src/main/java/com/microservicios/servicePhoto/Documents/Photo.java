@@ -1,5 +1,6 @@
 package com.microservicios.servicePhoto.Documents;
 import lombok.*;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class Photo implements Serializable {
-    @Id
+    private ObjectId id;
     @Positive(message = "the number_id must be greater than 0")
     private int number_id;
     @NotEmpty(message = "the type_id field cannot be empty")

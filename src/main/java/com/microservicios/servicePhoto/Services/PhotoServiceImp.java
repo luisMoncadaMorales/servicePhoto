@@ -13,9 +13,16 @@ import java.util.List;
 public class PhotoServiceImp implements PhotoService {
     @Autowired
     private PhotoRepository repository;
+
     @Override
     public Photo savePhoto(Photo photo) {
-        return repository.savePhoto(photo);
+        Photo photoFound=this.photoById(photo.getNumber_id(),photo.getType_id());
+        if(photoFound==null){
+            return repository.savePhoto(photo);
+        }else{
+            photoFound.setImage(photo.getImage());
+            return repository.savePhoto(photoFound);
+        }
     }
 
     @Override
