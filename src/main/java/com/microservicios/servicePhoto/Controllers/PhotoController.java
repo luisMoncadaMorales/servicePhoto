@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api")
+@RequestMapping(value = "apiPhoto")
 public class PhotoController {
 
     private PhotoService service;
