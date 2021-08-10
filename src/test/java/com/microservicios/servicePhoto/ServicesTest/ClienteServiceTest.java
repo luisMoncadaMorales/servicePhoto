@@ -1,10 +1,10 @@
 package com.microservicios.servicePhoto.ServicesTest;
 
-import com.microservicios.servicePhoto.DTO.PhotoDTO;
 import com.microservicios.servicePhoto.Documents.Photo;
 import com.microservicios.servicePhoto.Repository.PhotoRepositoryImp;
 import com.microservicios.servicePhoto.Services.PhotoServiceImp;
 import org.assertj.core.api.Assertions;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,27 +25,23 @@ public class ClienteServiceTest {
     @Mock
     private PhotoRepositoryImp repository;
     private Photo photo;
-    private PhotoDTO photoDTO;
+    private String id;
     private List<Photo> photos;
-    private  List<PhotoDTO> clientsDTO;
+    private  List<String> ids;
 
     @BeforeEach
     public void setup(){
         MockitoAnnotations.openMocks(this);
         photo = Photo.builder()
-                .number_id(1052)
-                .type_id("cc")
+                .id(new ObjectId("61114838890fad27a3f0480c"))
                 .image("photo").build();
-        photoDTO = PhotoDTO.builder()
-                .number_id(1052)
-                .type_id("cc")
-                .build();
+        id = "61114838890fad27a3f0480c";
         photos = Arrays.asList(photo);
-        clientsDTO=Arrays.asList(photoDTO);
+        ids=Arrays.asList(id);
         Mockito.when(repository.savePhoto(photo)).thenReturn(photo);
         Mockito.when(repository.photos()).thenReturn(photos);
-        Mockito.when(repository.photoById(1052,"cc")).thenReturn(photo);
-        Mockito.when(repository.deleteById(1052,"cc")).thenReturn("removed");
+        Mockito.when(repository.photoById("61114838890fad27a3f0480c")).thenReturn(photo);
+        Mockito.when(repository.deleteById("61114838890fad27a3f0480c")).thenReturn("removed");
     }
     @Test
     public void saveClientTest() {
@@ -59,17 +55,17 @@ public class ClienteServiceTest {
     }
     @Test
     public void clientByIdTest() {
-        Photo photoResult =service.photoById(1052,"cc");
+        Photo photoResult =service.photoById("61114838890fad27a3f0480c");
         Assertions.assertThat(photoResult.getImage()).isEqualTo("photo");
     }
     @Test
     public void deleteByIdTest() {
-        String result=service.deleteById(1052,"cc");
+        String result=service.deleteById("61114838890fad27a3f0480c");
         Assertions.assertThat(result).isEqualTo("removed");
     }
     @Test
     public void clientsByIdTest() {
-        List<Photo> clientsResult=service.photosById(clientsDTO);
+        List<Photo> clientsResult=service.photosById(ids);
         Assertions.assertThat(clientsResult.size()).isEqualTo(1);
     }
 }

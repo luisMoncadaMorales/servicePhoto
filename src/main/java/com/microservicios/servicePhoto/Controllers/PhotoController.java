@@ -1,6 +1,6 @@
 package com.microservicios.servicePhoto.Controllers;
 
-import com.microservicios.servicePhoto.DTO.PhotoDTO;
+import com.microservicios.servicePhoto.DTO.PhotoDto;
 import com.microservicios.servicePhoto.Documents.Photo;
 import com.microservicios.servicePhoto.Services.PhotoService;
 import com.microservicios.servicePhoto.Services.ErrorService;
@@ -29,40 +29,40 @@ public class PhotoController {
     }
 
     @PostMapping(value = "savePhoto")
-    public ResponseEntity<Photo> savePhoto(@Valid  @RequestBody Photo photo, BindingResult bindingResult){
+    public ResponseEntity<PhotoDto> savePhoto(@Valid  @RequestBody PhotoDto photo, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw  new ResponseStatusException(HttpStatus.BAD_REQUEST,errorService.formatMessage(bindingResult));
         }else {
-            Photo photoResult = service.savePhoto(photo);
+            PhotoDto photoResult = service.savePhoto(photo);
             if (photoResult == null)
                 return ResponseEntity.unprocessableEntity().build();
             return ResponseEntity.ok(photoResult);
         }
     }
     @GetMapping(value = "photos")
-    public ResponseEntity<List<Photo>> photos(){
-        List<Photo> photos =service.photos();
+    public ResponseEntity<List<PhotoDto>> photos(){
+        List<PhotoDto> photos =service.photos();
         if (photos.isEmpty())
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(photos);
     }
     @GetMapping(value = "photoById")
-    public ResponseEntity<Photo> photoById(@Param(value = "id") int id, @Param(value = "typeId") String typeId){
-        Photo photo =service.photoById(id,typeId);
+    public ResponseEntity<PhotoDto> photoById(@Param(value = "id") String id){
+        PhotoDto photo =service.photoById(id);
         if (photo ==null)
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(photo);
     }
     @DeleteMapping(value = "deleteById")
-    public ResponseEntity<String> deleteById(@Param(value = "id") int id,@Param(value = "typeId") String typeId){
-        String result=service.deleteById(id,typeId);
+    public ResponseEntity<String> deleteById(@Param(value = "id") String id){
+        String result=service.deleteById(id);
         if (result!="removed")
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(result);
     }
     @PostMapping(value = "photosById")
-    public ResponseEntity<List<Photo>> photosById(@RequestBody List<PhotoDTO> clientsDTO){
-        List<Photo> photos =service.photosById(clientsDTO);
+    public ResponseEntity<List<PhotoDto>> photosById(@RequestBody List<String> clientsDTO){
+        List<PhotoDto> photos =service.photosById(clientsDTO);
         if (photos ==null){
             return ResponseEntity.noContent().build();
         }

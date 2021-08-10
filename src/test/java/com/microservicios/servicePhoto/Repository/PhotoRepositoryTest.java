@@ -3,6 +3,7 @@ package com.microservicios.servicePhoto.Repository;
 import com.microservicios.servicePhoto.Documents.Photo;
 import com.microservicios.servicePhoto.Persistence.PhotoDAO;
 import org.assertj.core.api.Assertions;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -33,13 +34,12 @@ public class PhotoRepositoryTest {
     public void setup(){
         MockitoAnnotations.openMocks(this);
         photo = Photo.builder()
-                .number_id(1052)
-                .type_id("cc")
+                .id(new ObjectId("61114838890fad27a3f0480c"))
                 .image("photo").build();
         photos = Arrays.asList(photo);
         Mockito.when(photoDAO.save(photo)).thenReturn(photo);
         Mockito.when(photoDAO.findAll()).thenReturn(photos);
-        Mockito.when(photoDAO.findByIdAndType(1052,"cc")).thenReturn(photo);
+        Mockito.when(photoDAO.findByIdAndType(new ObjectId("61114838890fad27a3f0480c"))).thenReturn(photo);
     }
     @Test
     public void saveClientTest() {
@@ -53,13 +53,13 @@ public class PhotoRepositoryTest {
     }
     @Test
     public void clientByIdTest() {
-        Photo photoResult =repository.photoById(1052,"cc");
+        Photo photoResult =repository.photoById("61114838890fad27a3f0480c");
         Assertions.assertThat(photoResult.getImage()).isEqualTo("photo");
     }
     @Test
     public void deleteByIdTest() {
-        repositoryMock.deleteById(1054,"cc");
-        verify( repositoryMock ).deleteById( 1054,"cc" );
+        repositoryMock.deleteById("61114838890fad27a3f0480c");
+        verify( repositoryMock ).deleteById("61114838890fad27a3f0480c");
     }
 
 }

@@ -5,9 +5,8 @@ import com.microservicios.servicePhoto.Documents.Photo;
 
 import java.util.List;
 
-public interface PhotoRepository {
-    PhotoDto savePhoto(PhotoDto photoDto);
-    List<PhotoDto> photos();
-    PhotoDto photoById(String id);
-    String deleteById(String id);
+public interface PhotoConvert {
+    PhotoDto photoToDTO(Photo photo);
+    Photo DTOtophoto(PhotoDto photoDto);
+    List<PhotoDto> photostoDTOs(List<Photo> photos);
 }

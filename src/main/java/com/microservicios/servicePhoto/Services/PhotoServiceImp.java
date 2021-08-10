@@ -1,6 +1,6 @@
 package com.microservicios.servicePhoto.Services;
 
-import com.microservicios.servicePhoto.DTO.PhotoDTO;
+import com.microservicios.servicePhoto.DTO.PhotoDto;
 import com.microservicios.servicePhoto.Documents.Photo;
 import com.microservicios.servicePhoto.Repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,11 @@ public class PhotoServiceImp implements PhotoService {
     private PhotoRepository repository;
 
     @Override
-    public Photo savePhoto(Photo photo) {
-        Photo photoFound=this.photoById(photo.getNumber_id(),photo.getType_id());
+    public PhotoDto savePhoto(PhotoDto photo) {
+        PhotoDto photoFound=null;
+        if (photo.getId()!=null) {
+             photoFound=this.photoById(photo.getId().toString());
+        }
         if(photoFound==null){
             return repository.savePhoto(photo);
         }else{
@@ -26,25 +29,25 @@ public class PhotoServiceImp implements PhotoService {
     }
 
     @Override
-    public List<Photo> photos() {
+    public List<PhotoDto> photos() {
         return repository.photos();
     }
 
     @Override
-    public Photo photoById(int id, String typeId) {
-        return repository.photoById(id,typeId);
+    public PhotoDto photoById(String id) {
+        return repository.photoById(id);
     }
 
     @Override
-    public String deleteById(int id, String typeId) {
-        return repository.deleteById(id,typeId);
+    public String deleteById(String id) {
+        return repository.deleteById(id);
     }
 
     @Override
-    public List<Photo> photosById(List<PhotoDTO> clientsDto) {
-        List<Photo> photos =new ArrayList<>();
-        for (PhotoDTO photoDTO :clientsDto ) {
-            Photo photo =repository.photoById(photoDTO.getNumber_id(), photoDTO.getType_id());
+    public List<PhotoDto> photosById(List<String> clientsDto) {
+        List<PhotoDto> photos =new ArrayList<>();
+        for (String id :clientsDto ) {
+            PhotoDto photo =repository.photoById(id);
             if (photo !=null)
                 photos.add(photo);
         }
