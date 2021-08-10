@@ -1,7 +1,6 @@
-package com.microservicios.servicePhoto.Repository;
+package com.microservicios.servicePhoto.RepositoryTest;
 
 import com.microservicios.servicePhoto.DTO.PhotoDto;
-import com.microservicios.servicePhoto.Documents.Photo;
 
 import java.util.List;
 

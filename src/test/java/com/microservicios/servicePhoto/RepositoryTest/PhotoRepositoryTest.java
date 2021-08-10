@@ -1,5 +1,6 @@
-package com.microservicios.servicePhoto.Repository;
+package com.microservicios.servicePhoto.RepositoryTest;
 
+import com.microservicios.servicePhoto.DTO.PhotoDto;
 import com.microservicios.servicePhoto.Documents.Photo;
 import com.microservicios.servicePhoto.Persistence.PhotoDAO;
 import org.assertj.core.api.Assertions;
@@ -26,9 +27,13 @@ public class PhotoRepositoryTest {
     private PhotoRepositoryImp repositoryMock;
     @Mock
     private PhotoDAO photoDAO;
+    @Mock
+    private PhotoConvertImp photoConvertService;
 
     private Photo photo;
     private List<Photo> photos;
+    private PhotoDto photoDTO;
+    private List<PhotoDto> photosDTO;
 
     @BeforeEach
     public void setup(){
@@ -37,23 +42,30 @@ public class PhotoRepositoryTest {
                 .id(new ObjectId("61114838890fad27a3f0480c"))
                 .image("photo").build();
         photos = Arrays.asList(photo);
+        photoDTO = PhotoDto.builder()
+                .id("61114838890fad27a3f0480c")
+                .image("photo").build();
+        photosDTO = Arrays.asList(photoDTO);
         Mockito.when(photoDAO.save(photo)).thenReturn(photo);
         Mockito.when(photoDAO.findAll()).thenReturn(photos);
         Mockito.when(photoDAO.findByIdAndType(new ObjectId("61114838890fad27a3f0480c"))).thenReturn(photo);
+        Mockito.when(photoConvertService.photoToDTO(photo)).thenReturn(photoDTO);
+        Mockito.when(photoConvertService.DTOtophoto(photoDTO)).thenReturn(photo);
+        Mockito.when(photoConvertService.photostoDTOs(photos)).thenReturn(photosDTO);
     }
     @Test
     public void saveClientTest() {
-        Photo photoResult =repository.savePhoto(photo);
+        PhotoDto photoResult =repository.savePhoto(photoDTO);
         Assertions.assertThat(photoResult).isNotNull();
     }
     @Test
     public void ClientsTest() {
-        List<Photo> clientsResult=repository.photos();
+        List<PhotoDto> clientsResult=repository.photos();
         Assertions.assertThat(clientsResult.size()).isEqualTo(1);
     }
     @Test
     public void clientByIdTest() {
-        Photo photoResult =repository.photoById("61114838890fad27a3f0480c");
+        PhotoDto photoResult =repository.photoById("61114838890fad27a3f0480c");
         Assertions.assertThat(photoResult.getImage()).isEqualTo("photo");
     }
     @Test
