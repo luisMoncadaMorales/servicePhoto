@@ -24,8 +24,6 @@ public class PhotoRepositoryTest {
     private PhotoRepositoryImp repository;
 
     @Mock
-    private PhotoRepositoryImp repositoryMock;
-    @Mock
     private PhotoDAO photoDAO;
     @Mock
     private PhotoConvertImp photoConvertService;
@@ -70,8 +68,8 @@ public class PhotoRepositoryTest {
     }
     @Test
     public void deleteByIdTest() {
-        repositoryMock.deleteById("61114838890fad27a3f0480c");
-        verify( repositoryMock ).deleteById("61114838890fad27a3f0480c");
+        String result= repository.deleteById("61114838890fad27a3f0480c");
+        Assertions.assertThat(result).isEqualTo("removed");
     }
 
 }
