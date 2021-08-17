@@ -1,7 +1,7 @@
 package com.microservicios.servicePhoto.Services;
 
 import com.microservicios.servicePhoto.DTO.PhotoDto;
-import com.microservicios.servicePhoto.RepositoryTest.PhotoRepository;
+import com.microservicios.servicePhoto.Repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

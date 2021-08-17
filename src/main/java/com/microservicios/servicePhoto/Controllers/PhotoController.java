@@ -1,7 +1,6 @@
 package com.microservicios.servicePhoto.Controllers;
 
 import com.microservicios.servicePhoto.DTO.PhotoDto;
-import com.microservicios.servicePhoto.Documents.Photo;
 import com.microservicios.servicePhoto.Services.PhotoService;
 import com.microservicios.servicePhoto.Services.ErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +62,7 @@ public class PhotoController {
     @PostMapping(value = "photosById")
     public ResponseEntity<List<PhotoDto>> photosById(@RequestBody List<String> clientsDTO){
         List<PhotoDto> photos =service.photosById(clientsDTO);
-        if (photos ==null){
+        if (photos.isEmpty()){
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(photos);

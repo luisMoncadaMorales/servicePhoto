@@ -1,4 +1,4 @@
-package com.microservicios.servicePhoto.RepositoryTest;
+package com.microservicios.servicePhoto.Repository;
 
 import com.microservicios.servicePhoto.DTO.PhotoDto;
 

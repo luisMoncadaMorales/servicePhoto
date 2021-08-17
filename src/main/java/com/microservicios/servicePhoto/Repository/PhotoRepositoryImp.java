@@ -1,4 +1,4 @@
-package com.microservicios.servicePhoto.RepositoryTest;
+package com.microservicios.servicePhoto.Repository;
 
 import com.microservicios.servicePhoto.DTO.PhotoDto;
 import com.microservicios.servicePhoto.Documents.Photo;
@@ -13,19 +13,18 @@ import java.util.List;
 public class PhotoRepositoryImp implements PhotoRepository {
     @Autowired
     private PhotoDAO photoDAO;
-    @Autowired
-    private PhotoConvert photoConvert;
+
     @Override
     public PhotoDto savePhoto(PhotoDto photoDto) {
-        Photo photo=photoConvert.DTOtophoto(photoDto);
+        Photo photo=PhotoMapper.INSTANCE.DTOtophoto(photoDto);
         Photo photoResult=photoDAO.save(photo);
-        return photoConvert.photoToDTO(photoResult);
+        return PhotoMapper.INSTANCE.photoToDTO(photoResult);
     }
 
     @Override
     public List<PhotoDto> photos() {
         List<Photo> photos= photoDAO.findAll();
-        List<PhotoDto> result=photoConvert.photostoDTOs(photos);
+        List<PhotoDto> result=PhotoMapper.INSTANCE.photostoDTOs(photos);
         return result;
     }
 
@@ -33,7 +32,7 @@ public class PhotoRepositoryImp implements PhotoRepository {
     public PhotoDto photoById(String id) {
         Photo photo=photoDAO.findByIdAndType(new ObjectId(id));
         if(photo!=null){
-            PhotoDto result=photoConvert.photoToDTO(photo);
+            PhotoDto result=PhotoMapper.INSTANCE.photoToDTO(photo);
             return result;
         }
         return null;

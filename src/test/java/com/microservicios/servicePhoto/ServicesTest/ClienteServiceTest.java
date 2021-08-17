@@ -1,7 +1,7 @@
 package com.microservicios.servicePhoto.ServicesTest;
 
 import com.microservicios.servicePhoto.DTO.PhotoDto;
-import com.microservicios.servicePhoto.RepositoryTest.PhotoRepositoryImp;
+import com.microservicios.servicePhoto.Repository.PhotoRepositoryImp;
 import com.microservicios.servicePhoto.Services.PhotoServiceImp;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

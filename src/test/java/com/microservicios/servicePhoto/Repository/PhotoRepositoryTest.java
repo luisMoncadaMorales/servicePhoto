@@ -1,4 +1,4 @@
-package com.microservicios.servicePhoto.RepositoryTest;
+package com.microservicios.servicePhoto.Repository;
 
 import com.microservicios.servicePhoto.DTO.PhotoDto;
 import com.microservicios.servicePhoto.Documents.Photo;
@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
@@ -25,8 +26,6 @@ public class PhotoRepositoryTest {
 
     @Mock
     private PhotoDAO photoDAO;
-    @Mock
-    private PhotoConvertImp photoConvertService;
 
     private Photo photo;
     private List<Photo> photos;
@@ -44,12 +43,9 @@ public class PhotoRepositoryTest {
                 .id("61114838890fad27a3f0480c")
                 .image("photo").build();
         photosDTO = Arrays.asList(photoDTO);
-        Mockito.when(photoDAO.save(photo)).thenReturn(photo);
+        Mockito.when(photoDAO.save(any())).thenReturn(photo);
         Mockito.when(photoDAO.findAll()).thenReturn(photos);
         Mockito.when(photoDAO.findByIdAndType(new ObjectId("61114838890fad27a3f0480c"))).thenReturn(photo);
-        Mockito.when(photoConvertService.photoToDTO(photo)).thenReturn(photoDTO);
-        Mockito.when(photoConvertService.DTOtophoto(photoDTO)).thenReturn(photo);
-        Mockito.when(photoConvertService.photostoDTOs(photos)).thenReturn(photosDTO);
     }
     @Test
     public void saveClientTest() {
