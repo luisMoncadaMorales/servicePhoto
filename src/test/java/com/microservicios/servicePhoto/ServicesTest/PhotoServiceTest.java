@@ -18,7 +18,7 @@ import java.util.List;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class ClienteServiceTest {
+public class PhotoServiceTest {
     @InjectMocks
     private PhotoServiceImp service;
     @Mock

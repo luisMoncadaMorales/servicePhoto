@@ -7,7 +7,9 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class PhotoRepositoryImp implements PhotoRepository {
@@ -24,8 +26,7 @@ public class PhotoRepositoryImp implements PhotoRepository {
     @Override
     public List<PhotoDto> photos() {
         List<Photo> photos= photoDAO.findAll();
-        List<PhotoDto> result=PhotoMapper.INSTANCE.photostoDTOs(photos);
-        return result;
+        return photos.stream().map(photo->PhotoMapper.INSTANCE.photoToDTO(photo)).collect(Collectors.toList());
     }
 
     @Override

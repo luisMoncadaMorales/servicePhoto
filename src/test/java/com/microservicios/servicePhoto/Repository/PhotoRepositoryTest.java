@@ -48,19 +48,24 @@ public class PhotoRepositoryTest {
         Mockito.when(photoDAO.findByIdAndType(new ObjectId("61114838890fad27a3f0480c"))).thenReturn(photo);
     }
     @Test
-    public void saveClientTest() {
+    public void savePhotoTest() {
         PhotoDto photoResult =repository.savePhoto(photoDTO);
         Assertions.assertThat(photoResult).isNotNull();
     }
     @Test
-    public void ClientsTest() {
+    public void photosTest() {
         List<PhotoDto> clientsResult=repository.photos();
         Assertions.assertThat(clientsResult.size()).isEqualTo(1);
     }
     @Test
-    public void clientByIdTest() {
+    public void photoByIdTest() {
         PhotoDto photoResult =repository.photoById("61114838890fad27a3f0480c");
         Assertions.assertThat(photoResult.getImage()).isEqualTo("photo");
+    }
+    @Test
+    public void photoByIdElseTest() {
+        PhotoDto photoResult =repository.photoById("61114838890fad27a3f0480d");
+        Assertions.assertThat(photoResult).isNull();
     }
     @Test
     public void deleteByIdTest() {
